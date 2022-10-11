@@ -100,18 +100,25 @@ namespace PracticeExercise2
 
         public void InsertAfter(T newValue, int existingValue)
         {
+
+            length++;
+
             throw new NotImplementedException();
             length++;
         }
 
         public void InsertAt(T value, int index)
         {
+            length++;
+
             throw new NotImplementedException();
             length++;
         }
 
         public void Prepend(T value)
         {
+            length++;
+
             throw new NotImplementedException();
             length++;
         }
@@ -164,8 +171,19 @@ namespace PracticeExercise2
             }
         }
 
+                    return;
+                }
+
+                currentNode = currentNode.Next;
+            }
+
+        }
+
         public void RemoveAt(int index)
         {
+
+            // length--;
+
             throw new NotImplementedException();
             length--;
 

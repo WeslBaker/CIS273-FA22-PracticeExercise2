@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PracticeExercise2;
 
 namespace UnitTests
@@ -10,7 +11,7 @@ namespace UnitTests
         public void TestLength()
         {
 
-            IList<int> list = new LinkedList<int>();
+            PracticeExercise2.IList<int> list = new PracticeExercise2.LinkedList<int>();
 
             Assert.AreEqual(0, list.Length);
 
@@ -34,7 +35,7 @@ namespace UnitTests
         public void TestIsEmpty()
         {
 
-            IList<int> list = new LinkedList<int>();
+            PracticeExercise2.IList<int> list = new PracticeExercise2.LinkedList<int>();
 
             Assert.IsTrue(list.IsEmpty);
 
@@ -50,12 +51,9 @@ namespace UnitTests
         [TestMethod]
         public void TestFirst()
         {
-            IList<int> list = new LinkedList<int>();
-
-            Assert.ThrowsException<NullReferenceException>(() =>
-            {
-                int i = list.First;
-            });
+            PracticeExercise2.IList<int?> list = new PracticeExercise2.LinkedList<int?>();
+            int? nullValue = list.First;
+            Assert.IsNull(nullValue);
 
             for (int i = 0; i < 10; i++)
             {
@@ -76,12 +74,9 @@ namespace UnitTests
         [TestMethod]
         public void TestLast()
         {
-            IList<int> list = new LinkedList<int>();
-
-            Assert.ThrowsException<NullReferenceException>(() =>
-            {
-                int i = list.Last;
-            });
+            PracticeExercise2.IList<int?> list = new PracticeExercise2.LinkedList<int?>();
+            int? nullValue = list.Last;
+            Assert.IsNull(nullValue);
 
             list.Append(0);
 
@@ -104,7 +99,7 @@ namespace UnitTests
         [TestMethod]
         public void TestAppend()
         {
-            IList<int> list = new LinkedList<int>();
+            PracticeExercise2.IList<int> list = new PracticeExercise2.LinkedList<int>();
 
             for (int i = 0; i < 10; i++)
             {
@@ -128,11 +123,11 @@ namespace UnitTests
         [TestMethod]
         public void TestPrepend()
         {
-            IList<int> list = new LinkedList<int>();
+            PracticeExercise2.IList<int> list = new PracticeExercise2.LinkedList<int>();
             list.Prepend(0);
             Assert.AreEqual(0, list.First);
 
-            list = new LinkedList<int>();
+            list = new PracticeExercise2.LinkedList<int>();
 
             for (int i = 9; i >= 0; i--)
             {
@@ -156,7 +151,7 @@ namespace UnitTests
         [TestMethod]
         public void TestInsertAfter()
         {
-            IList<int> list = new LinkedList<int>();
+            PracticeExercise2.IList<int> list = new PracticeExercise2.LinkedList<int>();
             for (int i = 0; i < 5; i++)
             {
                 list.Append(i);
@@ -177,7 +172,8 @@ namespace UnitTests
             list.InsertAfter(400, 8);
             Assert.AreEqual("[0,42,42,1,2,3,42,4,42,400]", list.ToString().Replace(" ", ""));
 
-            list = new LinkedList<int>();
+            list = new PracticeExercise2.LinkedList<int>();
+
             list.InsertAfter(42, 3);
             Assert.AreEqual("[42]", list.ToString().Replace(" ", ""));
         }
@@ -185,7 +181,8 @@ namespace UnitTests
         [TestMethod]
         public void TestInsertAt()
         {
-            IList<int> list = new LinkedList<int>();
+            PracticeExercise2.IList<int> list = new PracticeExercise2.LinkedList<int>();
+
             for (int i = 0; i < 5; i++)
             {
                 list.Append(i);
@@ -215,7 +212,8 @@ namespace UnitTests
                 list.InsertAt(42, -5);
             });
 
-            list = new LinkedList<int>();
+            list = new PracticeExercise2.LinkedList<int>();
+
             list.InsertAt(42, 0);
             Assert.AreEqual("[42]", list.ToString().Replace(" ", ""));
 
@@ -227,7 +225,8 @@ namespace UnitTests
         [TestMethod]
         public void TestFirstIndexOf()
         {
-            IList<int> list = new LinkedList<int>();
+            PracticeExercise2.IList<int> list = new PracticeExercise2.LinkedList<int>();
+
             for (int i = 0; i < 5; i++)
             {
                 list.Append(i);
@@ -250,7 +249,8 @@ namespace UnitTests
         [TestMethod]
         public void TestRemove()
         {
-            IList<int> list = new LinkedList<int>();
+            PracticeExercise2.IList<int> list = new PracticeExercise2.LinkedList<int>();
+
             for (int i = 0; i < 5; i++)
             {
                 list.Append(i);
@@ -279,7 +279,8 @@ namespace UnitTests
             Assert.AreEqual("[3,0,2,3,4,5,6,7,8,9]", list.ToString().Replace(" ", ""));
 
             // Empty list
-            list = new LinkedList<int>();
+            list = new PracticeExercise2.LinkedList<int>();
+
             list.Remove(3);
             Assert.AreEqual("[]", list.ToString().Replace(" ", ""));
 
@@ -288,7 +289,8 @@ namespace UnitTests
         [TestMethod]
         public void TestRemoveAt()
         {
-            IList<int> list = new LinkedList<int>();
+            PracticeExercise2.IList<int> list = new PracticeExercise2.LinkedList<int>();
+
             for (int i = 0; i < 5; i++)
             {
                 list.Append(i);
@@ -317,7 +319,8 @@ namespace UnitTests
                 list.RemoveAt(-5);
             });
 
-            list = new LinkedList<int>();
+            list = new PracticeExercise2.LinkedList<int>();
+
             Assert.ThrowsException<IndexOutOfRangeException>(() =>
             {
                 list.RemoveAt(0);
@@ -328,7 +331,8 @@ namespace UnitTests
         [TestMethod]
         public void TestClear()
         {
-            IList<int> list = new LinkedList<int>();
+            PracticeExercise2.IList<int> list = new PracticeExercise2.LinkedList<int>();
+
             list.Clear();
             Assert.AreEqual(0, list.Length);
 
@@ -352,7 +356,8 @@ namespace UnitTests
         [TestMethod]
         public void TestReverse()
         {
-            IList<int> list = new LinkedList<int>();
+            PracticeExercise2.IList<int> list = new PracticeExercise2.LinkedList<int>();
+
             for (int i = 0; i < 5; i++)
             {
                 list.Append(i);
@@ -363,6 +368,29 @@ namespace UnitTests
             Assert.AreEqual("[0,1,2,3,4]", list.ToString().Replace(" ", ""));
 
             Assert.AreEqual("[0,1,2,3,4]", reversed.Reverse().ToString().Replace(" ", ""));
+        }
+
+
+        [TestMethod]
+        public void TestGet()
+        {
+            PracticeExercise2.IList<int> list = new PracticeExercise2.LinkedList<int>();
+            for (int i = 0; i < 5; i++)
+            {
+                list.Append(i);
+            }
+
+            Assert.AreEqual(0, list.Get(0));
+            Assert.AreEqual(1, list.Get(1));
+            Assert.AreEqual(2, list.Get(2));
+
+            for (int i = 5; i < 50; i++)
+            {
+                list.Append(i);
+            }
+
+            Assert.AreEqual(45, list.Get(45));
+            Assert.AreEqual(10, list.Get(10));
         }
     }
 }
