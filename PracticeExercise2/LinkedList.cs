@@ -23,15 +23,15 @@ namespace PracticeExercise2
     }
 
 	public class LinkedList<T>: IList<T>
-	{
+    {
         public LinkedListNode<T> Head { get; set; }
         public LinkedListNode<T> Tail { get; set; }
 
-		public LinkedList()
-		{
+        public LinkedList()
+        {
             Head = null;
             Tail = null;
-		}
+        }
 
         public T? First => throw new NotImplementedException();
 
@@ -152,7 +152,7 @@ namespace PracticeExercise2
                     {
                         currentNode.Next = null;
                         Tail = currentNode;
-        }
+                    }
                     else
                     {
                         currentNode.Next = currentNode.Next.Next;
