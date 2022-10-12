@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace PracticeExercise2
 {
-
     public class LinkedListNode<T>
     {
         public T Data { get; set; }
@@ -33,11 +33,11 @@ namespace PracticeExercise2
             Tail = null;
         }
 
-        public T? First => throw new NotImplementedException();
+        public T? First => IsEmpty ? default(T) : Head.Data;
 
-        public T? Last => throw new NotImplementedException();
+        public T? Last => IsEmpty ? default(T) : Tail.Data;
 
-        public bool IsEmpty => throw new NotImplementedException();
+        public bool IsEmpty => length == 0;
 
         private int length = 0;
         public int Length => length;
@@ -70,7 +70,14 @@ namespace PracticeExercise2
 
         public bool Contains(T value)
         {
-            throw new NotImplementedException();
+            for(var currentNode = Head; currentNode != null; currentNode = currentNode.Next)
+            {
+                if(currentNode.Data.Equals(value))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public int FirstIndexOf(T value)
@@ -95,31 +102,96 @@ namespace PracticeExercise2
 
         public T Get(int index)
         {
-            throw new NotImplementedException();
+            if(index < 0 || index >= Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            else
+            {
+                int currentIndex = 0;
+                for(var currentNode = Head; currentNode != null; currentNode = currentNode.Next, currentIndex++)
+                {
+                    if(currentIndex.Equals(index))
+                    {
+                        return currentNode.Data;
+                    }
+                }
+            }
+            return default(T);
         }
 
         public void InsertAfter(T newValue, int existingValue)
         {
+            var currentNode = Head;
+            var newNode = new LinkedListNode<T>(newValue);
 
-            length++;
-
-            throw new NotImplementedException();
-            length++;
+            while (currentNode != null)
+            {
+                if (currentNode.Data.Equals(existingValue))
+                {
+                    if(currentNode == Tail)
+                    {
+                        currentNode.Next = newNode;
+                        Tail = newNode;
+                        length++;
+                        return;
+                    }
+                    newNode.Next = currentNode.Next;
+                    currentNode.Next = newNode;
+                    length++;
+                    return;
+                }
+                currentNode = currentNode.Next;
+            }
+            Append(newValue);
         }
 
         public void InsertAt(T value, int index)
         {
-            length++;
+            var currentNode = Head;
+            int currentIndex = 0;
 
-            throw new NotImplementedException();
-            length++;
+            if (index < 0 || index > Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            if (index == 0)
+            {
+                Prepend(value);
+            }
+            while(currentNode != null)
+            {
+                if(currentIndex == index - 1)
+                {
+                    var newNode = new LinkedListNode<T>(value);
+                    newNode.Next = currentNode.Next;
+                    currentNode.Next = newNode;
+                    length++;
+
+                    if(currentNode == Tail)
+                    {
+                        Tail = newNode ;
+                    }
+                }
+                
+                currentNode = currentNode.Next;
+                currentIndex++;
+            }
         }
 
         public void Prepend(T value)
         {
-            length++;
-
-            throw new NotImplementedException();
+            var newNode = new LinkedListNode<T>(value);
+            if(IsEmpty)
+            {
+                Head = newNode;
+                Tail = newNode;
+            }
+            else
+            {
+                newNode.Next = Head;
+                Head = newNode;
+            }
             length++;
         }
 
@@ -170,28 +242,77 @@ namespace PracticeExercise2
                 currentNode = currentNode.Next;
             }
         }
-
-                    return;
-                }
-
-                currentNode = currentNode.Next;
-            }
-
-        }
-
         public void RemoveAt(int index)
         {
+            if(index < 0 || index >= Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
 
-            // length--;
+            //Handle an empty list
+            if(IsEmpty)
+            {
+                return;
+            }
 
-            throw new NotImplementedException();
-            length--;
+            //If removing the head
+            if(index == 0)
+            {
+                //1-element list
+                if (Head == Tail)
+                {
+                    Tail = null;
+                    Head = null;
+                }
+                else
+                {
+                    Head = Head.Next;
+                }
+                length--;
+                return;
+            }
 
+            var currentNode = Head;
+            int currentIndex = 0;
+            while (currentNode != null)
+            {
+                if (currentNode.Next != null && currentIndex == index - 1)
+                {
+                    var nodeToDelete = currentNode.Next;
+                    if (nodeToDelete == Tail)
+                    {
+                        currentNode.Next = null;
+                        Tail = currentNode;
+                    }
+                    else
+                    {
+                        currentNode.Next = currentNode.Next.Next;
+                        nodeToDelete.Next = null;
+                    }
+                    length--;
+                    return;
+                }
+                currentNode = currentNode.Next;
+                currentIndex++;
+            }
         }
 
         public IList<T> Reverse()
         {
-            throw new NotImplementedException();
+            IList<T> reversed = new LinkedList<T>();
+            var currentNode = Head;
+
+            //Handle an empty list
+            if(IsEmpty)
+            {
+                return reversed;
+            }
+            while(currentNode != null)
+            {
+                reversed.Prepend(currentNode.Data);
+                currentNode = currentNode.Next;
+            }
+            return reversed;
         }
 
         public override string ToString()
@@ -206,11 +327,14 @@ namespace PracticeExercise2
                 }
                 else
                 {
-                    result += $"{currentNode.ToString()} ]";
+                    result += $"{currentNode.ToString()}";
                 }
             }
+            result += " ]";
+
             return result;
         }
     }
 }
+
 
